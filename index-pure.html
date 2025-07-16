@@ -40,7 +40,7 @@
         /* 修复下载按钮样式 - 固定悬浮在屏幕底部 */
         .down-btn {
             position: fixed !important;
-            bottom: 0.77rem !important;
+            bottom: 1rem !important;
             left: 50% !important;
             transform: translateX(-50%) !important;
             z-index: 10000 !important;
@@ -103,12 +103,40 @@
         
         /* 减少页面底部的空白 */
         .app-down-page {
-            padding-bottom: 4rem !important; /* 从8rem减少到4rem */
+            padding-bottom: 2rem !important; /* 进一步减少到2rem */
         }
         
         /* 减少文字块内部的间距 */
         .app-down-page .content .wen-zi {
             gap: 15px !important; /* 从30px减少到15px */
+        }
+        
+        /* 版权信息样式 */
+        .copyright-section {
+            text-align: center;
+            padding: 0.3rem 1rem 0.1rem;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(215,232,255,0.2) 100%);
+            margin-top: 0.1rem;
+            margin-bottom: 0;
+        }
+        
+        .copyright-text {
+            color: #666;
+            font-family: HarmonyOS Sans SC;
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin: 0;
+            opacity: 0.7;
+        }
+        
+        .copyright-text:first-child {
+            margin-bottom: 4px;
+        }
+        
+        .copyright-text .highlight {
+            color: #0b69ef;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -167,6 +195,12 @@
                                 </p>
                                 <p class="liu-da">六大维度，大数据算法为用户规避风险</p>
                             </div>
+                        </div>
+                        
+                        <!-- 版权信息 -->
+                        <div class="copyright-section">
+                            <p class="copyright-text">版权©️由 <span class="highlight">Feixiaohao technology INC</span> 持有</p>
+                            <p class="copyright-text">商标注册号®️：<span class="highlight">240146550</span></p>
                         </div>
                     </div>
                 </div>
