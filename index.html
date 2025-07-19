@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.3333333333333333, maximum-scale=0.3333333333333333, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="Cache-Control" content="no-transform">
+    <meta name="Cache-Control" content="no-siteapp">
+    <meta name="applicable-device" content="mobile">
+    <meta name="MobileOptimized" content="width">
+    <meta name="HandheldFriendly" content="true">
+    <title>非小号-领先的数字货币市场分析, 资讯与实时行情追踪平台</title>
+    <meta name="description" content="非小号(www.feixiaohao.com.cn), 领先的数字货币行业大数据分析平台, 提供实时比特币, 以太坊等全球10000+加密货币行情价格更新, 我们专注于为用户深度挖掘数据价值, 分析数字货币趋势, 覆盖600+交易平台和数万交易对, 为您的投资决策提供全方位的数据支持和专业分析服务">
+    <meta name="keywords" content="非小号,数字货币,实时行情,资讯">
+    
+    <!-- 图标 -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" sizes="any" href="/favicon.svg">
+    
+    <!-- CSS文件 -->
+    <link rel="stylesheet" href="static/p/m-web-plus/v1.0.7/vendors/app.css">
+    <link rel="stylesheet" href="static/p/m-web-plus/v1.0.7/app.css">
+    <link rel="stylesheet" href="static/p/m-web-plus/v1.0.7/pages/app/index.css">
+    
+    <!-- 字体图标 -->
+    <script src="static/t/font_1993448_3c2syp3b02v.js"></script>
+    
+    <style>
+        /* 确保页面内容不被覆盖 */
+        body {
+            position: relative;
+            z-index: 9999;
+        }
+        
+        /* 禁用所有可能的覆盖层 */
+        .overlay, .modal, .popup {
+            display: none !important;
+        }
+        
+        /* 修复下载按钮样式 - 固定悬浮在屏幕底部 */
+        .down-btn {
+            position: fixed !important;
+            bottom: 1rem !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 10000 !important;
+            /* 保持原始样式 */
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: linear-gradient(91deg, #2f9bff, #0b69ef) !important;
+            border-radius: 0.69rem !important;
+            box-shadow: 3px 6px 12px 0 rgba(100,181,255,.62), 6px 12px 36px 0 rgba(86,214,255,.24) !important;
+            gap: 30px !important;
+            height: 0.92rem !important;
+            width: 6.15rem !important;
+            margin: 0 auto !important;
+        }
+        
+        /* 确保页面布局正确 */
+        .app-down-page {
+            min-height: 100vh;
+            padding-bottom: 8rem; /* 为固定按钮留出空间 */
+        }
+        
+        /* 确保按钮内容样式正确 */
+        .down-btn .down-arrow {
+            flex-shrink: 0;
+            height: 72px;
+            margin-right: 30px;
+            width: 72px;
+        }
+        
+        .down-btn .down-arrow img {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .down-btn .down-txt {
+            color: #fff;
+            font-family: HarmonyOS Sans SC;
+            font-size: 54px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 72px;
+            text-align: center;
+        }
+        
+        /* 修复"六大维度"文字后面的空白 */
+        .liu-da {
+            margin-top: 10px !important; /* 进一步减少到10px */
+        }
+        
+        /* 大幅减少content块之间的空白 */
+        .app-down-page .content {
+            margin-bottom: 0.2rem !important; /* 进一步减少到0.2rem */
+        }
+        
+        /* 最后一个content块不需要底部边距 */
+        .app-down-page .content:last-child {
+            margin-bottom: 0 !important;
+        }
+        
+        /* 减少页面底部的空白 */
+        .app-down-page {
+            padding-bottom: 2rem !important; /* 进一步减少到2rem */
+        }
+        
+        /* 减少文字块内部的间距 */
+        .app-down-page .content .wen-zi {
+            gap: 15px !important; /* 从30px减少到15px */
+        }
+        
+        /* 版权信息样式 */
+        .copyright-section {
+            text-align: center;
+            padding: 0.3rem 1rem 0.1rem;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(215,232,255,0.2) 100%);
+            margin-top: 0.1rem;
+            margin-bottom: 0;
+        }
+        
+        .copyright-text {
+            color: #666;
+            font-family: HarmonyOS Sans SC;
+            font-size: 28px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin: 0;
+            opacity: 0.7;
+        }
+        
+        .copyright-text:first-child {
+            margin-bottom: 4px;
+        }
+        
+        .copyright-text .highlight {
+            color: #0b69ef;
+            font-weight: 500;
+        }
+        
+        /* 合规排行榜样式 */
+        .he-gui {
+            color: #0b69ef;
+            font-family: HarmonyOS Sans SC;
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.4;
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面内容 -->
+    <div id="__nuxt">
+        <div id="__layout">
+            <div>
+                <div class="gun-dong">
+                    <div class="fiexd_buttom" style="height: 0"></div>
+                    <div class="wxworkTips" style="display:none;"></div>
+                    <div class="app-down-page">
+                        <div class="first active">
+                            <div class="logo">
+                                <img src="static/p/m-web-plus/v1.0.7/static/images/app/logo.png" alt="非小号">
+                            </div>
+                            <p class="quan-wei">权威行业排行榜</p>
+                            <div class="pic1">
+                                <img src="static/p/m-web-plus/v1.0.7/static/images/app/pic1.png" alt="权威排行榜">
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="pic">
+                                <img src="static/p/m-web-plus/v1.0.7/static/images/app/pic2.png" alt="精准全球指数">
+                            </div>
+                            <div class="wen-zi">
+                                <p class="jing-zhun">
+                                    <span>精准</span>
+                                    <span class="bold">全球指数</span>
+                                    <span>，我们有实力</span>
+                                </p>
+                                <p>用严谨，科学的算法，从海量交易所行情信息中萃取</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="pic">
+                                <img src="static/p/m-web-plus/v1.0.7/static/images/app/pic3.png" alt="公正排行榜">
+                            </div>
+                            <div class="wen-zi">
+                                <p class="jing-zhun">
+                                    <span>公正</span>
+                                    <span class="bold">排行榜</span>
+                                    <span>，我们有态度</span>
+                                </p>
+                                <p>去伪存真，真实公正，用数据说话的排行榜</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="pic">
+                                <img src="static/p/m-web-plus/v1.0.7/static/images/app/pic4.png" alt="ExRank全球交易所">
+                            </div>
+                            <div class="wen-zi">
+                                <p class="jing-zhun">
+                                    <span class="bold">ExRank全球交易所</span>
+                                    <span>综合排行榜</span>
+                                </p>
+                                <p class="he-gui">全球合规排行榜</p>
+                                <p class="liu-da">六大维度，大数据算法为用户规避风险</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 版权信息 -->
+                        <div class="copyright-section">
+                            <p class="copyright-text">版权©️由 <span class="highlight">Feixiaohao technology INC</span> 持有</p>
+                            <p class="copyright-text">商标注册号®️：<span class="highlight">240146550</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 固定悬浮的下载按钮 -->
+    <div class="down-btn" id="downloadBtn" onclick="handleDownload()">
+        <div class="down-arrow">
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAABYlAAAWJQFJUiTwAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAADrSURBVHgB7dnbDYJAEIXhg7EAS6AU7WRasAJiZ3RiKeMYXowJMCuzN3O+xPjABvYnPOxmASKiv6Cqk/pNCDIgyHtWKeMHgwAndI4BtTGgNgbUxoDaug84ewbZKuFif6P9Lghi97xuXbeVxgwH13rEHvbEElDSbBG3vUHeTyjszScYPYO8AXeU90Ak+4xEyxHkUChCkFPmCEEJmSIEJQVHCGoIihDUdDBC0IIfIwQtSYwQtMgZIWjZToSgBysRgp58RQh6ZBMfddkMEXVH0w4scls9EBk2ApIOLHJbOxDZ2hPH7kmPaWkuREQfXi0NBsOMsACkAAAAAElFTkSuQmCC" alt="下载箭头">
+        </div>
+        <span class="down-txt">立即下载</span>
+    </div>
+
+    <!-- 简化的下载功能脚本 -->
+    <script>
+        function handleDownload() {
+            // 检测设备类型
+            const userAgent = navigator.userAgent.toLowerCase();
+            let downloadUrl = '';
+            let message = '';
+            
+            if (/iphone|ipad|ipod/.test(userAgent)) {
+                // iOS设备 - 跳转到App Store
+                downloadUrl = 'https://apps.apple.com/cn/app/id1234567890xxxxx'; // 需要替换为实际的App Store链接
+                message = '正在跳转到App Store下载非小号APP...';
+            } else if (/android/.test(userAgent)) {
+                // Android设备 - 下载APK
+                downloadUrl = 'https://oss.feixiaohao.ai/app/feixiaohao.apk'; // 需要替换为实际的APK下载链接
+                message = '正在下载非小号APP...';
+            } else {
+                // 其他设备 - 显示二维码或提供选择
+                message = '请使用手机扫描二维码下载非小号APP';
+                alert(message);
+                return;
+            }
+            
+            if (downloadUrl) {
+                alert(message);
+                // 使用window.open而不是location.href
+                const newWindow = window.open(downloadUrl, '_blank');
+                if (!newWindow) {
+                    alert('弹窗被阻止，请手动访问: ' + downloadUrl);
+                }
+            }
+        }
+        
+        // 页面加载完成后的确认
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ 纯静态页面加载完成');
+            console.log('✅ 所有功能正常，无自动跳转');
+            console.log('✅ 下载按钮已修复为固定悬浮');
+        });
+        
+        // 防止页面被其他脚本修改
+        Object.freeze(document.body);
+        Object.freeze(document.getElementById('__nuxt'));
+    </script>
+</body>
+</html> 
