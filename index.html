@@ -242,15 +242,19 @@
                 // iOS设备 - 跳转到App Store
                 downloadUrl = 'https://apps.apple.com/cn/app/id1234567890xxxxx'; // 需要替换为实际的App Store链接
                 message = '正在跳转到App Store下载非小号APP...';
-            } else if (/android/.test(userAgent)) {
-                // Android设备 - 下载APK
-                downloadUrl = 'https://oss.feixiaohao.ai/app/feixiaohao.apk'; // 需要替换为实际的APK下载链接
-                message = '正在下载非小号APP...';
             } else {
-                // 其他设备 - 显示二维码或提供选择
-                message = '请使用手机扫描二维码下载非小号APP';
-                alert(message);
-                return;
+                // 所有其他设备（Android、电脑等）都提供下载选择
+                const choice = confirm('请选择下载方式：\n\n点击"确定"下载Android版本\n点击"取消"跳转到iOS版本');
+                
+                if (choice) {
+                    // 用户选择Android版本
+                    downloadUrl = 'https://oss.feixiaohao.ai/app/feixiaohao.apk';
+                    message = '正在下载非小号APP (Android版本)...';
+                } else {
+                    // 用户选择iOS版本
+                    downloadUrl = 'https://apps.apple.com/cn/app/id1234567890xxxxx';
+                    message = '正在跳转到App Store下载非小号APP...';
+                }
             }
             
             if (downloadUrl) {
