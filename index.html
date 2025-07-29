@@ -151,7 +151,235 @@
             margin-bottom: 10px;
             opacity: 0.9;
         }
+        
+        /* 微信提示浮层样式 */
+        .wechat-tip-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .wechat-tip-modal {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 90%;
+            width: 400px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .wechat-tip-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .wechat-tip-content {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        
+        .wechat-tip-url {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 10px;
+            margin: 15px 0;
+            word-break: break-all;
+            font-size: 14px;
+            color: #333;
+            font-family: monospace;
+        }
+        
+        .wechat-tip-btn {
+            background: #0b69ef;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .wechat-tip-btn:hover {
+            background: #0956d1;
+        }
+        
+        .wechat-tip-btn.secondary {
+            background: #999;
+        }
+        
+        .wechat-tip-btn.secondary:hover {
+            background: #777;
+        }
+        
+        /* 微信提示浮层按钮（保留样式以备后用） */
+        .wechat-tip-float-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            z-index: 99998;
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .wechat-tip-float-btn:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 107, 107, 0.4);
+        }
+        
+        .wechat-tip-float-btn.hidden {
+            display: none;
+        }
     </style>
+    
+    <!-- 微信浏览器检测脚本 -->
+    <script>
+        // 检测是否为微信内置浏览器
+        function isWeChat() {
+            const ua = navigator.userAgent.toLowerCase();
+            return ua.indexOf('micromessenger') > -1;
+        }
+        
+        // 复制文本到剪贴板
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                // 使用现代 Clipboard API
+                return navigator.clipboard.writeText(text).then(() => {
+                    return true;
+                }).catch(() => {
+                    return false;
+                });
+            } else {
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    return Promise.resolve(successful);
+                } catch (err) {
+                    document.body.removeChild(textArea);
+                    return Promise.resolve(false);
+                }
+            }
+        }
+        
+        // 显示微信提示浮层
+        function showWeChatTip() {
+            const currentUrl = window.location.href;
+            
+            // 如果已经存在浮层，先移除
+            const existingOverlay = document.querySelector('.wechat-tip-overlay');
+            if (existingOverlay) {
+                document.body.removeChild(existingOverlay);
+            }
+            
+            const overlay = document.createElement('div');
+            overlay.className = 'wechat-tip-overlay';
+            overlay.innerHTML = `
+                <div class="wechat-tip-modal">
+                    <div class="wechat-tip-title">⚠️ 微信浏览器限制</div>
+                    <div class="wechat-tip-content">
+                        检测到您正在使用微信内置浏览器访问，为了更好的体验，建议您：
+                        <br><br>
+                        1. 点击下方"复制链接"按钮
+                        <br>
+                        2. 在手机浏览器中打开链接
+                        <br><br>
+                        <small style="color: #999;">请在外部浏览器中打开此链接</small>
+                    </div>
+                    <div class="wechat-tip-url" id="urlToCopy">${currentUrl}</div>
+                    <div>
+                        <button class="wechat-tip-btn" onclick="copyUrlAndShow()">复制链接</button>
+                        <button class="wechat-tip-btn secondary" onclick="closeWeChatTip()">我知道了</button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(overlay);
+        }
+        
+        // 复制URL并显示提示
+        function copyUrlAndShow() {
+            const urlToCopy = document.getElementById('urlToCopy').textContent;
+            copyToClipboard(urlToCopy).then(success => {
+                if (success) {
+                    alert('✅ 链接已复制到剪贴板！\n\n请在手机浏览器中打开此链接。');
+                } else {
+                    alert('❌ 复制失败，请手动复制链接：\n\n' + urlToCopy);
+                }
+            });
+        }
+        
+        // 关闭微信提示浮层
+        function closeWeChatTip() {
+            const overlay = document.querySelector('.wechat-tip-overlay');
+            if (overlay) {
+                document.body.removeChild(overlay);
+            }
+        }
+        
+        // 创建浮层按钮（保留以备后用）
+        function createFloatButton() {
+            const floatBtn = document.createElement('button');
+            floatBtn.className = 'wechat-tip-float-btn';
+            floatBtn.innerHTML = '微信提示';
+            floatBtn.onclick = showWeChatTip;
+            document.body.appendChild(floatBtn);
+        }
+        
+        // 页面加载时检测微信浏览器
+        document.addEventListener('DOMContentLoaded', function() {
+            if (isWeChat()) {
+                // 立即显示微信提示浮层
+                showWeChatTip();
+                
+                // 添加点击屏幕其他区域重新显示浮层的功能
+                document.addEventListener('click', function(e) {
+                    // 如果点击的不是浮层内部元素，且浮层当前没有显示，则重新显示
+                    if (!e.target.closest('.wechat-tip-overlay') && !e.target.closest('.wechat-tip-float-btn')) {
+                        const existingOverlay = document.querySelector('.wechat-tip-overlay');
+                        if (!existingOverlay) {
+                            showWeChatTip();
+                        }
+                    }
+                });
+                
+                console.log('🔍 检测到微信浏览器，立即显示微信提示浮层');
+            } else {
+                console.log('✅ 非微信浏览器，正常显示页面');
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- 页面内容 -->
@@ -233,6 +461,13 @@
     <!-- 简化的下载功能脚本 -->
     <script>
         function handleDownload() {
+            // 检测是否为微信浏览器
+            if (isWeChat()) {
+                alert('⚠️ 微信浏览器限制\n\n请在手机浏览器中打开此页面进行下载。');
+                console.log('🔍 在微信浏览器中点击下载按钮，显示限制提示');
+                return;
+            }
+            
             // 检测设备类型
             const userAgent = navigator.userAgent.toLowerCase();
             let downloadUrl = '';
@@ -272,6 +507,7 @@
             console.log('✅ 纯静态页面加载完成');
             console.log('✅ 所有功能正常，无自动跳转');
             console.log('✅ 下载按钮已修复为固定悬浮');
+            console.log('✅ 微信浏览器检测功能已添加');
         });
         
         // 防止页面被其他脚本修改
